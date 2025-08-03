@@ -10,7 +10,10 @@ int inputMarks(); //Function to input students' marks
 int totalAndAverage(); //Function to display total and average of marks
 int highestAndLowest(); //Function to display highest and lowest mark among all students
 void displayMedian();//Function to calculate and display Median
-void standardDeviation();
+void standardDeviation();// Function to calculate the standard deviation
+char findGrades(int array);//Function to find grades
+void showGrades();//Function to show grades and ASCII bar
+void nextScore();//Function to predict next score
 
 
 int main()
@@ -27,7 +30,8 @@ int main()
     printf("4.Display median\n");
     printf("5.Display standard deviation\n");
     printf("6.Show grades\n");
-    printf("7.Exit\n\n");
+    printf("7.Predict next score\n");
+    printf("8.Exit\n\n");
 
     //prompt user to input a choice
     printf("Enter your choice(1-7):");
@@ -49,16 +53,33 @@ int main()
 
     case 4:
 
-
+         displayMedian();//Calling function to display median
+         break;
 
     case 5:
+        standardDeviation();//Calling function to calculate standard deviation
+        break;
+
     case 6:
+        showGrades();
+        break;
+
     case 7:
+        nextScore();
+        break;
+
+    case 8:
+        printf("Thank you!");
+        break;
+
+    default:
+        printf("Invalid choice");
 
 
 
+        }
     }
-    }
+    while (choice != 8);
 
 
     return 0;
@@ -189,6 +210,103 @@ void standardDeviation(){
     float standardDev = sqrt(variance);
 
     printf("Standard Deviation: %.2f\n",standardDev);
+}
+
+char findGrades(int array){   // Function to get grades based on marks
+    if (array >= 75){
+        return 'A';
+    } else if (array >= 65){
+        return 'B';
+    } else if (array >= 50){
+        return 'C';
+    } else if (array >= 35){
+        return 'S';
+    } else {
+        return 'F';
+    }
+
+}
+
+void showGrades(){
+    if (numStudents==0){
+        printf("No marks entered\n");
+        return;
+    }
+
+    printf("Student Grades:\n");
+
+    int gradeCount[5]={0}; // variable to count grades "A,B,C,S,F"
+    int i;
+    int grade;
+    //count for each grade
+    for (i=0;i<numStudents;i++){
+        char grade = findGrades(array[i]);
+        printf("Student %d: %d - %c\n",i+1,array[i],grade);
+    }
+
+       if (grade =='A'){
+        gradeCount[0]++;
+        }
+        else if (grade=='B'){
+            gradeCount[1]++;
+        }
+        else if (grade =='C'){
+            gradeCount[2]++;
+        }
+        else if (grade =='S'){
+            gradeCount[3]++;
+        }
+        else if (grade == 'F'){
+            gradeCount[4]++;
+        }
+
+        printf("Summary of Grades:\n");
+        printf("Students with A: %d \n",gradeCount[0]);
+        printf("Students with B: %d \n",gradeCount[1]);
+        printf("Students with C: %d \n",gradeCount[2]);
+        printf("Students with S: %d \n",gradeCount[3]);
+        printf("Students with F: %d \n",gradeCount[4]);
+
+        //ASCII bar graph
+
+        printf("A: ");
+        for (i=0;i< gradeCount[0];i++){
+            printf("*");
+            printf(" %d\n", gradeCount[0]);
+        }
+        printf("B: ");
+        for (i=0;i<gradeCount[1];i++){
+            printf("*");
+            printf(" %d\n",gradeCount[1]);
+        }
+        printf("C: ");
+        for (i=0;i<gradeCount[2];i++){
+            printf("*");
+            printf(" %d\n",gradeCount[2]);
+        }
+        printf("S: ");
+        for (i=0;i<gradeCount[3];i++){
+            printf("*");
+            printf(" %d\n",gradeCount[3]);
+        }
+        printf("F: ");
+        for (i=0;i<gradeCount[4];i++){
+            printf("*");
+            printf(" %d\n",gradeCount[4]);
+        }
+
+
+}
+
+void nextScore(){    // Function to predict next score
+    if (numStudents<3){
+          printf("We want at least 3 marks.\n");
+          return;
+    }
+    int sum = array[numStudents-1]+array[numStudents-2]+array[numStudents-3];
+    float predicted = (float)sum/3;
+    printf("Last three marks:%d %d %d\n",array[numStudents-3],array[numStudents-2],array[numStudents-1]);
+    printf("The predicted next score: %c\n",findGrades((int)predicted));
 }
 
 
